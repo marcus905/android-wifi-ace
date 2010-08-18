@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">WiFi Advanced Configuration Editor</string>
+
+	<string name="TITLE_PREFS">Network Configurations</string>
+	<string name="TITLE_CONFIG">Configuration</string>
+	<string name="TITLE_KEYMGT">Key Management</string>
+	<string name="TITLE_AUTH">Auth Protocols</string>
+	<string name="TITLE_GRP">Group Ciphers</string>
+	<string name="TITLE_PAIR">Pairwise Ciphers</string>
+	<string name="TITLE_SEC">Security Protocols</string>
+	<string name="TITLE_KEYS">Keys</string>
+	<string name="TITLE_WEP_KEYS">WEP Keys</string>
+	<string name="TITLE_ENTERPRISE">Enterprise Configuration</string>
+
+	<string name="SSID">SSID</string>
+	<string name="IDENTITY">Identity</string>
+	<string name="HIDDEN_SSID">Hidden SSID</string>
+	<string name="KEY_NONE">None</string>
+	<string name="KEY_PSK">WPA_PSK</string>
+	<string name="KEY_EAP">WPA_EAP</string>
+	<string name="KEY_IEEE">IEEE8021X</string>
+	<string name="AUTH_OPEN">OPEN</string>
+	<string name="AUTH_LEAP">LEAP</string>
+	<string name="AUTH_SHARED">SHARED</string>
+	<string name="GRP_WEP40">WEP40</string>
+	<string name="GRP_WEP104">WEP104</string>
+	<string name="GRP_TKIP">TKIP</string>
+	<string name="GRP_CCMP">CCMP</string>
+	<string name="PAIR_NONE">NONE</string>
+	<string name="PAIR_TKIP">TKIP</string>
+	<string name="PAIR_CCMP">CCMP</string>
+	<string name="SEC_WPA">WPA</string>
+	<string name="SEC_RSN">RSN</string>
+	<string name="WPA_KEY">WPA PreShared Key</string><string name="KEY_IDX">WEP Key Index</string>
+	<string name="KEY_KEY0">Key 0</string>
+	<string name="KEY_KEY1">Key 1</string>
+	<string name="KEY_KEY2">Key 2</string>
+	<string name="KEY_KEY3">Key 3</string>
+	<string name="ENTERPRISE_EAP">EAP</string>
+	<string name="ENTERPRISE_PHASE2">Phase2</string>
+	<string name="ENTERPRISE_IDENTITY">Identity</string>
+	<string name="ENTERPRISE_ANON_IDENT">Anonymous Identity</string>
+	<string name="ENTERPRISE_PASS">Password</string>
+	<string name="ENTERPRISE_CLIENT_CERT">Client Certificate</string>
+	<string name="ENTERPRISE_CA_CERT">CA Certificate</string>
+	<string name="ENTERPRISE_PRIV_KEY">Private Key</string>
+	
+	<string name="WIFI_ENABLE_MSG">Wi-Fi is currently disabled. Do you want to enable it now?</string>
+	<string name="YES">Yes</string>
+	<string name="NO">No</string>	
+	<string name="NA">N/A</string>
+<string name="BSSID">BSSID</string>
+
+
+<string name="ABOUT_TITLE">About</string>
+
+<string name="ABOUT_CONTENT">WiFi Advanced Configuration Editor\n\nCoded by Marcus905 &lt;marcus90@gmail.com&gt;\nUses code by OddRain\n\nLicensed under the Apache License, Version 2.0\nProject page and source at http://android-wifi-ace.googlecode.com\n\nDonate by buying the donate version in the Market or PayPal to my email!</string>
+
+
+</resources>
