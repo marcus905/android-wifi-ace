@@ -175,14 +175,16 @@ public class WiFiACEList extends Activity implements
 			// null for overzealous java compiler
 			Class wcEnterpriseField = null;
 
-			for (Class wcClass : wcClasses)
+			for (Class wcClass : wcClasses){
+				System.err.println(wcClass.getName());
 				if (wcClass
 						.getName()
 						.equals(
-								"android.net.wifi.WifiConfiguration.EnterpriseField")) {
+								"android.net.wifi.WifiConfiguration$EnterpriseField")) {
 					wcEnterpriseField = wcClass;
 					break;
 				}
+			}
 			// I know there is enterpriseFields but I haven't
 			// gotten around it yet
 			// nulls here to workaround the overzealous java compiler
@@ -191,34 +193,34 @@ public class WiFiACEList extends Activity implements
 			// Dispatching Field vars
 			for (Field wcefField : wcefFields) {
 				if (wcefField
-						.getName()
+						.getName().trim()
 						.equals(
-								"android.net.wifi.WifiConfiguration.anonymous_identity"))
+								"anonymous_identity"))
 					wcefAnonymousId = wcefField;
-				else if (wcefField.getName().equals(
-						"android.net.wifi.WifiConfiguration.ca_cert"))
+				else if (wcefField.getName().trim().equals(
+						"ca_cert"))
 					wcefCaCert = wcefField;
 				else if (wcefField
-						.getName()
+						.getName().trim()
 						.equals(
-								"android.net.wifi.WifiConfiguration.client_cert"))
+								"client_cert"))
 					wcefClientCert = wcefField;
-				else if (wcefField.getName().equals(
-						"android.net.wifi.WifiConfiguration.eap"))
+				else if (wcefField.getName().trim().equals(
+						"eap"))
 					wcefEap = wcefField;
-				else if (wcefField.getName().equals(
-						"android.net.wifi.WifiConfiguration.identity"))
+				else if (wcefField.getName().trim().equals(
+						"identity"))
 					wcefIdentity = wcefField;
-				else if (wcefField.getName().equals(
-						"android.net.wifi.WifiConfiguration.password"))
+				else if (wcefField.getName().trim().equals(
+						"password"))
 					wcefPassword = wcefField;
-				else if (wcefField.getName().equals(
-						"android.net.wifi.WifiConfiguration.phase2"))
+				else if (wcefField.getName().trim().equals(
+						"phase2"))
 					wcefPhase2 = wcefField;
 				else if (wcefField
-						.getName()
+						.getName().trim()
 						.equals(
-								"android.net.wifi.WifiConfiguration.pivate_key"))
+								"private_key"))
 					wcefPrivateKey = wcefField;
 			}
 			// if (selectedConfig.eap.value() != null) {
