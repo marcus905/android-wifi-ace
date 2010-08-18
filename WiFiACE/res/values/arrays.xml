@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="eap_names">
+		<item>PEAP</item>
+		<item>TLS</item>
+		<item>TTLS</item>
+		<item>None</item>
+	</string-array>
+	<string-array name="eap_values">
+		<item>PEAP</item>
+		<item>TLS</item>
+		<item>TTLS</item>
+		<item></item>
+	</string-array>
+	<string-array name="phase2_names">
+		<item>PAP</item>
+		<item>MSCHAP</item>
+		<item>MSCHAP2</item>
+		<item>GTC</item>
+		<item>None</item>
+	</string-array>
+	<string-array name="phase2_values">
+		<item>auth=PAP</item>
+		<item>auth=MSCHAP</item>
+		<item>auth=MSCHAP2</item>
+		<item>auth=GTC</item>
+		<item></item>
+	</string-array>
+<string-array name="wepkeyidx_names"><item>None</item><item>Key 0</item>
+<item>Key 1</item>
+<item>Key 2</item>
+<item>Key 3</item>
+
+</string-array>
+<string-array name="wepkeyidx_values"><item></item><item>0</item>
+<item>1</item>
+<item>2</item>
+<item>3</item>
+
+</string-array>
+</resources>

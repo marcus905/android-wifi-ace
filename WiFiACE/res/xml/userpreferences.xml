@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	android:title="@string/TITLE_PREFS">
+	<PreferenceCategory android:title="SSID"
+		android:orderingFromXml="true">
+		<EditTextPreference android:key="SSID"
+			android:summary="@string/SSID" android:title="@string/SSID"></EditTextPreference>
+		<EditTextPreference android:key="BSSID" android:summary="@string/BSSID" android:title="@string/BSSID"></EditTextPreference>
+		<CheckBoxPreference android:title="@string/HIDDEN_SSID"	android:key="HIDDEN_SSID"></CheckBoxPreference>
+	
+</PreferenceCategory>
+	<PreferenceCategory android:orderingFromXml="true"
+		android:title="@string/TITLE_CONFIG">
+		<PreferenceScreen android:orderingFromXml="true"
+			android:title="@string/TITLE_KEYMGT">
+			<CheckBoxPreference android:title="@string/KEY_NONE"
+				android:key="KEY_NONE"></CheckBoxPreference>
+			<CheckBoxPreference android:title="@string/KEY_PSK"
+				android:key="KEY_PSK"></CheckBoxPreference>
+			<CheckBoxPreference android:title="@string/KEY_EAP"
+				android:key="KEY_EAP"></CheckBoxPreference>
+			<CheckBoxPreference android:title="@string/KEY_IEEE"
+				android:key="KEY_IEEE"></CheckBoxPreference>
+		</PreferenceScreen>
+		<PreferenceScreen android:orderingFromXml="true"
+			android:title="@string/TITLE_AUTH">
+			<CheckBoxPreference android:title="@string/AUTH_OPEN"
+				android:key="AUTH_OPEN"></CheckBoxPreference>
+			<CheckBoxPreference android:title="@string/AUTH_LEAP"
+				android:key="AUTH_LEAP"></CheckBoxPreference>
+			<CheckBoxPreference android:title="@string/AUTH_SHARED"
+				android:key="AUTH_SHARED"></CheckBoxPreference>
+		</PreferenceScreen>
+		<PreferenceScreen android:orderingFromXml="true"
+			android:title="@string/TITLE_GRP">
+			<CheckBoxPreference android:title="@string/GRP_WEP40"
+				android:key="GRP_WEP40"></CheckBoxPreference>
+			<CheckBoxPreference android:title="@string/GRP_WEP104"
+				android:key="GRP_WEP104"></CheckBoxPreference>
+			<CheckBoxPreference android:title="@string/GRP_TKIP"
+				android:key="GRP_TKIP"></CheckBoxPreference>
+			<CheckBoxPreference android:title="@string/GRP_CCMP"
+				android:key="GRP_CCMP"></CheckBoxPreference>
+		</PreferenceScreen>
+		<PreferenceScreen android:title="@string/TITLE_PAIR">
+			<CheckBoxPreference android:title="@string/PAIR_NONE"
+				android:key="PAIR_NONE"></CheckBoxPreference>
+			<CheckBoxPreference android:title="@string/PAIR_TKIP"
+				android:key="PAIR_TKIP"></CheckBoxPreference>
+			<CheckBoxPreference android:title="@string/PAIR_CCMP"
+				android:key="PAIR_CCMP"></CheckBoxPreference>
+		</PreferenceScreen>
+		<PreferenceScreen android:orderingFromXml="true"
+			android:title="Security Protocols">
+			<CheckBoxPreference android:title="@string/SEC_WPA"
+				android:key="SEC_WPA"></CheckBoxPreference>
+			<CheckBoxPreference android:title="@string/SEC_RSN"
+				android:key="SEC_RSN"></CheckBoxPreference>
+		</PreferenceScreen>
+		<PreferenceScreen android:orderingFromXml="true"
+			android:title="@string/TITLE_ENTERPRISE" android:key="ENTERPRISE_PREF_SCREEN">
+			<ListPreference android:entries="@array/eap_names"
+				android:entryValues="@array/eap_values" android:dialogTitle="@string/ENTERPRISE_EAP" android:title="@string/ENTERPRISE_EAP" android:key="ENTERPRISE_EAP"></ListPreference>
+			<ListPreference android:entries="@array/phase2_names"
+				android:entryValues="@array/phase2_values" android:dialogTitle="@string/ENTERPRISE_PHASE2" android:title="@string/ENTERPRISE_PHASE2" android:key="ENTERPRISE_PHASE2"></ListPreference>
+			<EditTextPreference android:title="@string/ENTERPRISE_IDENTITY" android:key="ENTERPRISE_IDENT"></EditTextPreference>
+			<EditTextPreference android:title="@string/ENTERPRISE_ANON_IDENT" android:key="ENTERPRISE_ANON_IDENT"></EditTextPreference>
+			<EditTextPreference android:title="@string/ENTERPRISE_PASS" android:key="ENTERPRISE_PASS" android:password="true"></EditTextPreference>
+			<EditTextPreference android:title="@string/ENTERPRISE_CLIENT_CERT" android:key="ENTERPRISE_CLIENT_CERT"></EditTextPreference>
+			<EditTextPreference android:title="@string/ENTERPRISE_CA_CERT" android:key="ENTERPRISE_CA_CERT"></EditTextPreference>
+			<EditTextPreference android:title="@string/ENTERPRISE_PRIV_KEY" android:key="ENTERPRISE_PRIV_KEY"></EditTextPreference>
+		</PreferenceScreen>
+	</PreferenceCategory>
+	<PreferenceCategory android:orderingFromXml="true" android:title="@string/TITLE_KEYS">
+	<EditTextPreference android:key="WPA_KEY" android:title="@string/WPA_KEY" android:password="true"></EditTextPreference>
+		<PreferenceScreen android:title="@string/TITLE_WEP_KEYS">
+
+			<ListPreference android:entryValues="@array/wepkeyidx_values" android:title="@string/KEY_IDX" android:entries="@array/wepkeyidx_names" android:key="KEY_IDX"></ListPreference>
+			<EditTextPreference android:title="@string/KEY_KEY0"
+				android:key="KEY_KEY0" android:password="true"></EditTextPreference>
+			<EditTextPreference android:title="@string/KEY_KEY1"
+				android:key="KEY_KEY1" android:password="true"></EditTextPreference>
+			<EditTextPreference android:title="@string/KEY_KEY2"
+				android:key="KEY_KEY2" android:password="true"></EditTextPreference>
+			<EditTextPreference android:title="@string/KEY_KEY3"
+				android:key="KEY_KEY3" android:password="true"></EditTextPreference>
+		
+</PreferenceScreen>
+	
+</PreferenceCategory>
+
+</PreferenceScreen>
