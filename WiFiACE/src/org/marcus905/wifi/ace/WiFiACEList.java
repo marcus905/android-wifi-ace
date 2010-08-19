@@ -452,15 +452,14 @@ public class WiFiACEList extends Activity implements
 		Context context = getApplicationContext();
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
-
-		if (prefs.getString(WiFiACESettings.PREF_SSID, null) != null) {
-			selectedConfig.SSID = surroundWithQuotes(prefs.getString(
-					WiFiACESettings.PREF_SSID, ""));
+		
+		String slidingTemp = prefs.getString(WiFiACESettings.PREF_SSID, null);
+		if (slidingTemp != null) {
+			selectedConfig.SSID = surroundWithQuotes(slidingTemp);
 		}
-
-		if (prefs.getString(WiFiACESettings.PREF_BSSID, null) != null) {
-			selectedConfig.BSSID = prefs.getString(WiFiACESettings.PREF_BSSID,
-					"");
+		slidingTemp = prefs.getString(WiFiACESettings.PREF_BSSID, null);
+		if (slidingTemp != null && slidingTemp.length() == 17 && slidingTemp.matches("[0-9A-Fa-f:]*")) {
+			selectedConfig.BSSID = slidingTemp;
 		}
 
 		if (prefs.getBoolean(WiFiACESettings.PREF_HIDDEN_SSID, false)) {
@@ -558,26 +557,69 @@ public class WiFiACEList extends Activity implements
 		} catch (NumberFormatException nfe) {
 			// String is null or "", nothing to do.
 		}
-		if (prefs.getString(WiFiACESettings.PREF_WEPKEY_KEY0, null) != null) {
+		slidingTemp = prefs.getString(WiFiACESettings.PREF_WEPKEY_KEY0, null);
+		if (slidingTemp != null) {
+			switch(slidingTemp.length()){
+			case 10:
+			case 26:
+			case 58:
+				if(slidingTemp.matches("[0-9A-Fa-f]*")){
+					selectedConfig.wepKeys[0] = slidingTemp;
+				}
+			default:
 			selectedConfig.wepKeys[0] = surroundWithQuotes(prefs.getString(
 					WiFiACESettings.PREF_WEPKEY_KEY0, ""));
+			}
 		}
-		if (prefs.getString(WiFiACESettings.PREF_WEPKEY_KEY1, null) != null) {
+		slidingTemp = prefs.getString(WiFiACESettings.PREF_WEPKEY_KEY1, null);
+		if (slidingTemp != null) {
+			switch(slidingTemp.length()){
+			case 10:
+			case 26:
+			case 58:
+				if(slidingTemp.matches("[0-9A-Fa-f]*")){
+					selectedConfig.wepKeys[1] = slidingTemp;
+				}
+			default:
 			selectedConfig.wepKeys[1] = surroundWithQuotes(prefs.getString(
 					WiFiACESettings.PREF_WEPKEY_KEY1, ""));
+			}
 		}
-		if (prefs.getString(WiFiACESettings.PREF_WEPKEY_KEY2, null) != null) {
+		slidingTemp = prefs.getString(WiFiACESettings.PREF_WEPKEY_KEY2, null);
+		if (slidingTemp != null) {
+			switch(slidingTemp.length()){
+			case 10:
+			case 26:
+			case 58:
+				if(slidingTemp.matches("[0-9A-Fa-f]*")){
+					selectedConfig.wepKeys[2] = slidingTemp;
+				}
+			default:
 			selectedConfig.wepKeys[2] = surroundWithQuotes(prefs.getString(
 					WiFiACESettings.PREF_WEPKEY_KEY2, ""));
+			}
 		}
-		if (prefs.getString(WiFiACESettings.PREF_WEPKEY_KEY3, null) != null) {
+		slidingTemp = prefs.getString(WiFiACESettings.PREF_WEPKEY_KEY3, null);
+		if (slidingTemp != null) {
+			switch(slidingTemp.length()){
+			case 10:
+			case 26:
+			case 58:
+				if(slidingTemp.matches("[0-9A-Fa-f]*")){
+					selectedConfig.wepKeys[3] = slidingTemp;
+				}
+			default:
 			selectedConfig.wepKeys[3] = surroundWithQuotes(prefs.getString(
 					WiFiACESettings.PREF_WEPKEY_KEY3, ""));
+			}
 		}
-
-		if (prefs.getString(WiFiACESettings.PREF_WPA_KEY, null) != null) {
-			selectedConfig.preSharedKey = surroundWithQuotes(prefs.getString(
-					WiFiACESettings.PREF_WPA_KEY, ""));
+		
+		slidingTemp = prefs.getString(WiFiACESettings.PREF_WPA_KEY, null);
+		if (slidingTemp != null) {
+			if(slidingTemp.matches("[0-9A-Fa-f]{64}"))
+				selectedConfig.preSharedKey = slidingTemp;
+			else
+				selectedConfig.preSharedKey = surroundWithQuotes(slidingTemp);
 		}
 
 		// Enterprise Settings
@@ -643,7 +685,7 @@ public class WiFiACEList extends Activity implements
 			if (tVal != null) {
 				// selectedConfig.eap.setValue(tVal, ""));
 				wcefSetValue.invoke(
-						wcefEap.get(selectedConfig), tVal, "");
+						wcefEap.get(selectedConfig), tVal);
 
 			}
 			tVal = prefs
@@ -653,7 +695,8 @@ public class WiFiACEList extends Activity implements
 				// .getString(WiFiACESettings.PREF_ENTERPRISE_PHASE2, "")));
 				wcefSetValue.invoke(
 						wcefPhase2.get(selectedConfig),
-						surroundWithQuotes(tVal), "");
+						//surroundWithQuotes(tVal));
+						tVal);
 			}
 
 			tVal = prefs.getString(WiFiACESettings.PREF_ENTERPRISE_IDENT, null);
@@ -662,7 +705,8 @@ public class WiFiACEList extends Activity implements
 				// .getString(WiFiACESettings.PREF_ENTERPRISE_IDENT, "")));
 				wcefSetValue.invoke(
 						wcefIdentity.get(selectedConfig),
-						surroundWithQuotes(tVal), "");
+						//surroundWithQuotes(tVal));
+						tVal);
 
 			}
 
@@ -674,7 +718,8 @@ public class WiFiACEList extends Activity implements
 				// WiFiACESettings.PREF_ENTERPRISE_ANON_IDENT, "")));
 				wcefSetValue.invoke(
 						wcefAnonymousId.get(selectedConfig),
-						surroundWithQuotes(tVal), "");
+						//surroundWithQuotes(tVal));
+						tVal);
 
 			}
 			tVal = prefs.getString(WiFiACESettings.PREF_ENTERPRISE_PASS, null);
@@ -683,7 +728,8 @@ public class WiFiACEList extends Activity implements
 				// .getString(WiFiACESettings.PREF_ENTERPRISE_PASS, "")));
 				wcefSetValue.invoke(
 						wcefPassword.get(selectedConfig),
-						surroundWithQuotes(tVal), "");
+				//		surroundWithQuotes(tVal));
+						tVal);
 
 			}
 
@@ -695,7 +741,8 @@ public class WiFiACEList extends Activity implements
 				// "")));
 				wcefSetValue.invoke(
 						wcefClientCert.get(selectedConfig),
-						surroundWithQuotes(tVal), "");
+						//surroundWithQuotes(tVal));
+						tVal);
 
 			}
 
@@ -706,7 +753,8 @@ public class WiFiACEList extends Activity implements
 				// .getString(WiFiACESettings.PREF_ENTERPRISE_CA_CERT, "")));
 				wcefSetValue.invoke(
 						wcefCaCert.get(selectedConfig),
-						surroundWithQuotes(tVal), "");
+						//surroundWithQuotes(tVal));
+						tVal);
 
 			}
 
@@ -717,7 +765,8 @@ public class WiFiACEList extends Activity implements
 				// .getString(WiFiACESettings.PREF_ENTERPRISE_PRIV_KEY, "")));
 				wcefSetValue.invoke(
 						wcefPrivateKey.get(selectedConfig),
-						surroundWithQuotes(tVal), "");
+						//surroundWithQuotes(tVal));
+						tVal);
 
 			}
 
