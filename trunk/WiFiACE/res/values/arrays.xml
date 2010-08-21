@@ -26,16 +26,52 @@
 		<item>auth=GTC</item>
 		<item></item>
 	</string-array>
-<string-array name="wepkeyidx_names"><item>None</item><item>Key 0</item>
-<item>Key 1</item>
-<item>Key 2</item>
-<item>Key 3</item>
+	
+	<string-array name="wepkeyidx_names">
+		<item>Key 0</item>
+		<item>Key 1</item>
+		<item>Key 2</item>
+		<item>Key 3</item>
+	</string-array>
+	<string-array name="wepkeyidx_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+	</string-array>
 
-</string-array>
-<string-array name="wepkeyidx_values"><item></item><item>0</item>
-<item>1</item>
-<item>2</item>
-<item>3</item>
+	<string-array name="adhocfreq_names">
+		<item>Channel 1</item>
+		<item>Channel 2</item>
+		<item>Channel 3</item>
+		<item>Channel 4</item>
+		<item>Channel 5</item>
+		<item>Channel 6</item>
+		<item>Channel 7</item>
+		<item>Channel 8</item>
+		<item>Channel 9</item>
+		<item>Channel 10</item>
+		<item>Channel 11</item>
+		<item>Channel 12</item>
+		<item>Channel 13</item>
+		<item>Channel 14</item>
+	</string-array>
+	
+	<string-array name="adhocfreq_values">
+		<item>2412</item>
+		<item>2417</item>
+		<item>2422</item>
+		<item>2427</item>
+		<item>2432</item>
+		<item>2437</item>
+		<item>2442</item>
+		<item>2447</item>
+		<item>2452</item>
+		<item>2457</item>
+		<item>2462</item>
+		<item>2467</item>
+		<item>2472</item>
+		<item>2484</item>
+	</string-array>
 
-</string-array>
 </resources>

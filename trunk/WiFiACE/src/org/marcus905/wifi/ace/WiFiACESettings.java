@@ -26,6 +26,8 @@ public class WiFiACESettings extends PreferenceActivity implements
 	public static final String PREF_SSID = "SSID";
 	public static final String PREF_BSSID = "BSSID";
 	public static final String PREF_HIDDEN_SSID = "HIDDEN_SSID";
+	public static final String PREF_ADHOC = "ADHOC";
+	public static final String PREF_ADHOC_FREQUENCY = "ADHOC_FREQUENCY";
 
 	public static final String PREF_KEY_NONE = "KEY_NONE";
 	public static final String PREF_KEY_PSK = "KEY_PSK";
@@ -84,11 +86,6 @@ public class WiFiACESettings extends PreferenceActivity implements
 		e = findPreference(PREF_WPA_KEY);
 		e.setSummary(getPreferenceScreen().getSharedPreferences().getString(
 				PREF_WPA_KEY, null));
-		e.setOnPreferenceChangeListener(this);
-
-		e = findPreference(PREF_WEPKEY_IDX);
-		e.setSummary(getPreferenceScreen().getSharedPreferences().getString(
-				PREF_WEPKEY_IDX, null));
 		e.setOnPreferenceChangeListener(this);
 
 		e = findPreference(PREF_WEPKEY_KEY0);

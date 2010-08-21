@@ -145,8 +145,8 @@ public class WiFiACEList extends Activity implements
 
 		if (selectedConfig.wepTxKeyIndex > 3
 				|| selectedConfig.wepTxKeyIndex < 0) {
-			editor.putString(WiFiACESettings.PREF_WEPKEY_IDX, Integer
-					.toString(selectedConfig.wepTxKeyIndex));
+			editor.putInt(WiFiACESettings.PREF_WEPKEY_IDX, 
+					selectedConfig.wepTxKeyIndex);
 		}
 
 		if (selectedConfig.wepKeys[0] != null
@@ -155,28 +155,33 @@ public class WiFiACEList extends Activity implements
 					removeQuotes(selectedConfig.wepKeys[0]));
 		}
 
-		if (selectedConfig.wepKeys[1] != null) {
-			editor.putString(WiFiACESettings.PREF_WEPKEY_KEY1,
+		if (selectedConfig.wepKeys[1] != null
+				&& selectedConfig.wepKeys[1].length() >= 2) {
+		editor.putString(WiFiACESettings.PREF_WEPKEY_KEY1,
 					removeQuotes(selectedConfig.wepKeys[1]));
 		}
 
-		if (selectedConfig.wepKeys[2] != null) {
+		if (selectedConfig.wepKeys[2] != null
+				&& selectedConfig.wepKeys[2].length() >= 2) {
 			editor.putString(WiFiACESettings.PREF_WEPKEY_KEY2,
 					removeQuotes(selectedConfig.wepKeys[2]));
 		}
 
-		if (selectedConfig.wepKeys[3] != null) {
+		if (selectedConfig.wepKeys[3] != null
+				&& selectedConfig.wepKeys[3].length() >= 2) {
 			editor.putString(WiFiACESettings.PREF_WEPKEY_KEY3,
 					removeQuotes(selectedConfig.wepKeys[3]));
 		}
 
-		if (selectedConfig.preSharedKey != null) {
+		if (selectedConfig.preSharedKey != null
+				&& selectedConfig.preSharedKey.length() >= 2) {
 			editor.putString(WiFiACESettings.PREF_WPA_KEY,
 					removeQuotes(selectedConfig.preSharedKey));
 		}
 
 		// Reflection magic needs to be done here to access non-public
 		// APIs
+		// Also here new ad-hoc switch for CM6 users
 		// FIXME Make me pretty, as now I'm ugly
 
 		try {
@@ -309,6 +314,21 @@ public class WiFiACEList extends Activity implements
 						WiFiACESettings.PREF_ENTERPRISE_PRIV_KEY,
 						removeQuotes(tVal));
 			}
+			
+			// Adhoc for CM6
+			// nested try-catch for graceful fail.
+			try{
+			Field wcAdhoc = WifiConfiguration.class.getField("adhocSSID");
+			Field wcAdhocFreq = WifiConfiguration.class.getField("frequency");
+			editor.putBoolean(WiFiACESettings.PREF_ADHOC,
+					wcAdhoc.getBoolean(selectedConfig));
+			editor.putInt(WiFiACESettings.PREF_ADHOC_FREQUENCY, 
+					wcAdhocFreq.getInt(selectedConfig));
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			// FIXME Not used to Android, what should I do here?
@@ -458,14 +478,18 @@ public class WiFiACEList extends Activity implements
 			selectedConfig.SSID = surroundWithQuotes(slidingTemp);
 		}
 		slidingTemp = prefs.getString(WiFiACESettings.PREF_BSSID, null);
-		if (slidingTemp != null && slidingTemp.length() == 17 && slidingTemp.matches("[0-9A-Fa-f:]*")) {
+		if (slidingTemp != null && 
+				slidingTemp.length() == 17 && // avoid regex matching if can't be a macaddr
+				slidingTemp.matches(
+						"[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}")
+						) {
 			selectedConfig.BSSID = slidingTemp;
 		}
 
-		if (prefs.getBoolean(WiFiACESettings.PREF_HIDDEN_SSID, false)) {
-			selectedConfig.hiddenSSID = true;
-		} else {
+		if (!prefs.getBoolean(WiFiACESettings.PREF_HIDDEN_SSID, false)) {
 			selectedConfig.hiddenSSID = false;
+		} else {
+			selectedConfig.hiddenSSID = true;
 		}
 
 		selectedConfig.allowedKeyManagement.clear();
@@ -545,27 +569,22 @@ public class WiFiACEList extends Activity implements
 		}
 
 		// WEP Keys
-		try {
-			if (prefs.getString(WiFiACESettings.PREF_WEPKEY_IDX, null) != null
-					&& Integer.parseInt(prefs.getString(
-							WiFiACESettings.PREF_WEPKEY_IDX, null)) > 3
-					&& Integer.parseInt(prefs.getString(
-							WiFiACESettings.PREF_WEPKEY_IDX, null)) < 0) {
-				selectedConfig.wepTxKeyIndex = Integer.parseInt(prefs
-						.getString(WiFiACESettings.PREF_WEPKEY_IDX, null));
-			}
-		} catch (NumberFormatException nfe) {
-			// String is null or "", nothing to do.
-		}
+		String pIdx = prefs.getString(WiFiACESettings.PREF_WEPKEY_IDX, "-1");
+		//System.err.println(pIdx);
+		int idx = Integer.parseInt(pIdx);
+		if (!(idx < 0 || idx > 3))
+			selectedConfig.wepTxKeyIndex = idx;
+
+
 		slidingTemp = prefs.getString(WiFiACESettings.PREF_WEPKEY_KEY0, null);
 		if (slidingTemp != null) {
 			switch(slidingTemp.length()){
 			case 10:
 			case 26:
 			case 58:
-				if(slidingTemp.matches("[0-9A-Fa-f]*")){
+				if(slidingTemp.matches("[0-9A-Fa-f]*"))
 					selectedConfig.wepKeys[0] = slidingTemp;
-				}
+				break;
 			default:
 			selectedConfig.wepKeys[0] = surroundWithQuotes(prefs.getString(
 					WiFiACESettings.PREF_WEPKEY_KEY0, ""));
@@ -577,9 +596,9 @@ public class WiFiACEList extends Activity implements
 			case 10:
 			case 26:
 			case 58:
-				if(slidingTemp.matches("[0-9A-Fa-f]*")){
+				if(slidingTemp.matches("[0-9A-Fa-f]*"))
 					selectedConfig.wepKeys[1] = slidingTemp;
-				}
+				break;
 			default:
 			selectedConfig.wepKeys[1] = surroundWithQuotes(prefs.getString(
 					WiFiACESettings.PREF_WEPKEY_KEY1, ""));
@@ -591,9 +610,9 @@ public class WiFiACEList extends Activity implements
 			case 10:
 			case 26:
 			case 58:
-				if(slidingTemp.matches("[0-9A-Fa-f]*")){
+				if(slidingTemp.matches("[0-9A-Fa-f]*"))
 					selectedConfig.wepKeys[2] = slidingTemp;
-				}
+				break;
 			default:
 			selectedConfig.wepKeys[2] = surroundWithQuotes(prefs.getString(
 					WiFiACESettings.PREF_WEPKEY_KEY2, ""));
@@ -605,9 +624,9 @@ public class WiFiACEList extends Activity implements
 			case 10:
 			case 26:
 			case 58:
-				if(slidingTemp.matches("[0-9A-Fa-f]*")){
+				if(slidingTemp.matches("[0-9A-Fa-f]*"))
 					selectedConfig.wepKeys[3] = slidingTemp;
-				}
+				break;
 			default:
 			selectedConfig.wepKeys[3] = surroundWithQuotes(prefs.getString(
 					WiFiACESettings.PREF_WEPKEY_KEY3, ""));
@@ -624,6 +643,7 @@ public class WiFiACEList extends Activity implements
 
 		// Enterprise Settings
 		// Reflection magic here too, need access to non-public APIs
+		// Used also to access CM6 adhoc support
 		// FIXME Make me pretty, as I'm uglier than ever before.
 
 		try {
@@ -770,8 +790,21 @@ public class WiFiACEList extends Activity implements
 
 			}
 
-			// TODO Add here a checkbox/textfield to set mode=1 in the .conf
-			// file via wpa_cli for adhoc networks. Needs root.
+			// Adhoc for CM6
+			// if non-CM6 fails gracefully thanks to nested try-catch
+			
+			try{
+			Field wcAdhoc = WifiConfiguration.class.getField("adhocSSID");
+			Field wcAdhocFreq = WifiConfiguration.class.getField("frequency");
+			wcAdhoc.setBoolean(selectedConfig, prefs.getBoolean(WiFiACESettings.PREF_ADHOC,
+					false));
+			int freq = Integer.parseInt(prefs.getString(WiFiACESettings.PREF_ADHOC_FREQUENCY,
+					"2462")); 	// default to channel 11
+			//System.err.println(freq);
+			wcAdhocFreq.setInt(selectedConfig, freq); 
+			} catch (Exception e){
+				e.printStackTrace();
+			}
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -782,6 +815,7 @@ public class WiFiACEList extends Activity implements
 		wifiManager.updateNetwork(selectedConfig);
 		wifiManager.enableNetwork(selectedConfig.networkId, false);
 		wifiManager.saveConfiguration();
+		
 	}
 
 	static String removeQuotes(String str) {

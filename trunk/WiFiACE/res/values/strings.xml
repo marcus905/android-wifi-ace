@@ -65,4 +65,7 @@
 
 
 
+<string name="ADHOC">Adhoc (only for CM6)</string>
+<string name="ADHOC_FREQUENCY">Adhoc Channel Frequency</string>
+<string name="TITLE_ADHOC">Adhoc Configuration</string>
 </resources>
