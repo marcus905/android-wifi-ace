@@ -8,6 +8,10 @@
 		<EditTextPreference android:key="BSSID" android:summary="@string/BSSID" android:title="@string/BSSID"></EditTextPreference>
 		<CheckBoxPreference android:title="@string/HIDDEN_SSID"	android:key="HIDDEN_SSID"></CheckBoxPreference>
 	
+
+
+</PreferenceCategory><PreferenceCategory android:title="@string/TITLE_ADHOC" android:orderingFromXml="true"><CheckBoxPreference android:title="@string/ADHOC" android:key="ADHOC"></CheckBoxPreference>
+<ListPreference android:title="@string/ADHOC_FREQUENCY" android:key="ADHOC_FREQUENCY" android:entryValues="@array/adhocfreq_values" android:entries="@array/adhocfreq_names"></ListPreference>
 </PreferenceCategory>
 	<PreferenceCategory android:orderingFromXml="true"
 		android:title="@string/TITLE_CONFIG">
