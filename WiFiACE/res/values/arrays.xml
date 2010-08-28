@@ -4,12 +4,14 @@
 		<item>PEAP</item>
 		<item>TLS</item>
 		<item>TTLS</item>
+		<item>LEAP</item>
 		<item>None</item>
 	</string-array>
 	<string-array name="eap_values">
 		<item>PEAP</item>
 		<item>TLS</item>
 		<item>TTLS</item>
+		<item>LEAP</item>
 		<item></item>
 	</string-array>
 	<string-array name="phase2_names">
