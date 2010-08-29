@@ -322,8 +322,8 @@ public class WiFiACEList extends Activity implements
 			Field wcAdhocFreq = WifiConfiguration.class.getField("frequency");
 			editor.putBoolean(WiFiACESettings.PREF_ADHOC,
 					wcAdhoc.getBoolean(selectedConfig));
-			editor.putInt(WiFiACESettings.PREF_ADHOC_FREQUENCY, 
-					wcAdhocFreq.getInt(selectedConfig));
+			editor.putString(WiFiACESettings.PREF_ADHOC_FREQUENCY,
+					Integer.toString(wcAdhocFreq.getInt(selectedConfig)));
 			}catch(Exception e){
 				e.printStackTrace();
 			}
@@ -335,10 +335,7 @@ public class WiFiACEList extends Activity implements
 			e.printStackTrace();
 		}
 
-		// TODO Add here a checkbox/textfield to check if
-		// mode=1 is set in the .conf file via wpa_cli
-		// for adhoc networks support. Needs root.
-
+	
 		// FIXME Up to here converted 8 errors in 19 warnings.
 
 		editor.commit();
