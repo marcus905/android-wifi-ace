@@ -130,8 +130,10 @@ public class WiFiACESettings extends PreferenceActivity implements
 		e.setOnPreferenceChangeListener(this);
 
 		e = findPreference(PREF_ENTERPRISE_PASS);
+		
 		e.setSummary(getPreferenceScreen().getSharedPreferences().getString(
-					PREF_ENTERPRISE_PASS, null));
+					PREF_ENTERPRISE_PASS, "")
+					.equals("") ? "" : "*"); //we hide it as it's a pw
 		e.setOnPreferenceChangeListener(this);
 
 		e = findPreference(PREF_ENTERPRISE_CLIENT_CERT);
