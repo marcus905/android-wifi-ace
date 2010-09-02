@@ -133,7 +133,8 @@ public class WiFiACESettings extends PreferenceActivity implements
 		
 		e.setSummary(getPreferenceScreen().getSharedPreferences().getString(
 					PREF_ENTERPRISE_PASS, "")
-					.equals("") ? "" : "*"); //we hide it as it's a pw
+					.equals("") ? "" : getResources().getText(R.string.UNCHANGED)); 
+			//we hide it as it's a pw, although android seems to ignore our read attempt
 		e.setOnPreferenceChangeListener(this);
 
 		e = findPreference(PREF_ENTERPRISE_CLIENT_CERT);
@@ -182,7 +183,9 @@ public class WiFiACESettings extends PreferenceActivity implements
 			preference.setSummary((String) newValue);
 			return true;
 		} else if (preference.getKey().equals(PREF_ENTERPRISE_PASS)) {
-			preference.setSummary((String) newValue);
+			preference.setSummary(((String) newValue).equals("")? "" : 
+				getResources().getText(R.string.CHANGED));
+			//we hide it
 			return true;
 		} else if (preference.getKey().equals(PREF_ENTERPRISE_CLIENT_CERT)) {
 			preference.setSummary((String) newValue);
