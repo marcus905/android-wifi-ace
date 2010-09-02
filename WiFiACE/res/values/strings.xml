@@ -68,4 +68,6 @@
 <string name="ADHOC">Adhoc (only for CM6)</string>
 <string name="ADHOC_FREQUENCY">Adhoc Channel Frequency</string>
 <string name="TITLE_ADHOC">Adhoc Configuration</string>
+<string name="UNCHANGED">Unchanged</string>
+<string name="CHANGED">Changed</string>
 </resources>
