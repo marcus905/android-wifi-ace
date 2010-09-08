@@ -74,7 +74,10 @@ public class WiFiACEConfigAdapter extends ArrayAdapter<WifiConfiguration> {
 		TextView descView = (TextView) wifiConfigView
 				.findViewById(R.id.wifi_desc);
 
-		ssidView.setText(ssid.substring(1, ssid.length() - 1).trim());
+		
+		ssidView.setText(
+				ssid == null || ssid.equals("")	? 
+						"<no ssid>" : ssid.substring(1, ssid.length() - 1).trim());
 		descView.setText(protocols.trim());
 
 		return wifiConfigView;

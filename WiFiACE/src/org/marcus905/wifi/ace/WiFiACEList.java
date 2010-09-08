@@ -198,6 +198,10 @@ public class WiFiACEList extends Activity implements
 					wcEnterpriseField = wcClass;
 					break;
 				}
+			boolean noEnterpriseFieldType = false; 
+			if(wcEnterpriseField == null)
+				noEnterpriseFieldType = true; // Cupcake/Donut access enterprise settings directly
+
 			// I know there is enterpriseFields but I haven't
 			// gotten around it yet
 			// nulls here to workaround the overzealous java compiler
@@ -238,13 +242,22 @@ public class WiFiACEList extends Activity implements
 			}
 			
 			Method wcefValue = null;
+			if(!noEnterpriseFieldType){
 			for(Method m: wcEnterpriseField.getMethods())
 				//System.out.println(m.getName());
-				if(m.getName().trim().equals("value"))
+				if(m.getName().trim().equals("value")){
 					wcefValue = m;
-			
+				break;
+			}
+			}
 			// if (selectedConfig.eap.value() != null) {
-			String tVal = (String) wcefValue.invoke(wcefEap.get(selectedConfig), null);
+			
+			String tVal = null;
+			if(noEnterpriseFieldType)
+				tVal = (String) wcefEap.get(selectedConfig);
+			else
+				tVal = (String) wcefValue.invoke(wcefEap.get(selectedConfig), null);
+			
 			if (tVal != null) {
 				editor.putString(WiFiACESettings.PREF_ENTERPRISE_EAP,
 				/* selectedConfig.eap.value() */
@@ -252,8 +265,12 @@ public class WiFiACEList extends Activity implements
 			} 
 
 			// if (selectedConfig.phase2.value() != null) {
-			tVal = (String) wcefValue
-					.invoke(wcefPhase2.get(selectedConfig), null);
+			
+			if(noEnterpriseFieldType)
+				tVal = (String) wcefPhase2.get(selectedConfig);
+			else
+				tVal = (String) wcefValue.invoke(wcefPhase2.get(selectedConfig), null);
+
 			if (tVal != null) {
 				editor.putString(
 						WiFiACESettings.PREF_ENTERPRISE_PHASE2,
@@ -261,16 +278,22 @@ public class WiFiACEList extends Activity implements
 			}
 
 			// if (selectedConfig.identity.value() != null) {
-			tVal = (String) wcefValue
-					.invoke(wcefIdentity.get(selectedConfig), null);
+			if(noEnterpriseFieldType)
+				tVal = (String) wcefIdentity.get(selectedConfig);
+			else
+				tVal = (String) wcefValue.invoke(wcefIdentity.get(selectedConfig), null);
+
 			if (tVal != null) {
 				editor.putString(WiFiACESettings.PREF_ENTERPRISE_IDENT,
 						removeQuotes(tVal));
 			}
 
 			// if (selectedConfig.anonymous_identity.value() != null) {
-			tVal = (String) wcefValue
-					.invoke(wcefAnonymousId.get(selectedConfig), null);
+			if(noEnterpriseFieldType)
+				tVal = (String) wcefAnonymousId.get(selectedConfig);
+			else
+				tVal = (String) wcefValue.invoke(wcefAnonymousId.get(selectedConfig), null);
+
 			if (tVal != null) {
 				editor.putString(
 						WiFiACESettings.PREF_ENTERPRISE_ANON_IDENT,
@@ -278,8 +301,11 @@ public class WiFiACEList extends Activity implements
 			}
 
 			// if (selectedConfig.password.value() != null) {
-			tVal = (String) wcefValue
-					.invoke(wcefPassword.get(selectedConfig), null);
+			if(noEnterpriseFieldType)
+				tVal = (String) wcefPassword.get(selectedConfig);
+			else
+				tVal = (String) wcefValue.invoke(wcefPassword.get(selectedConfig), null);
+
 			if (tVal != null) {
 				editor.putString(WiFiACESettings.PREF_ENTERPRISE_PASS,
 						removeQuotes(tVal));
@@ -287,8 +313,11 @@ public class WiFiACEList extends Activity implements
 
 			// if (selectedConfig.client_cert.value() != null &&
 			// selectedConfig.client_cert.value().length() >= 2
-			tVal = (String) wcefValue
-					.invoke(wcefClientCert.get(selectedConfig), null);
+			if(noEnterpriseFieldType)
+				tVal = (String) wcefClientCert.get(selectedConfig);
+			else
+				tVal = (String) wcefValue.invoke(wcefClientCert.get(selectedConfig), null);
+
 			if (tVal != null && tVal.length() >= 2) {
 				editor.putString(
 						WiFiACESettings.PREF_ENTERPRISE_CLIENT_CERT,
@@ -297,8 +326,11 @@ public class WiFiACEList extends Activity implements
 
 			// if (selectedConfig.ca_cert.value() != null &&
 			// selectedConfig.ca_cert.value().length() >= 2) {
-			tVal = (String) wcefValue
-					.invoke(wcefCaCert.get(selectedConfig), null);
+			if(noEnterpriseFieldType)
+				tVal = (String) wcefCaCert.get(selectedConfig);
+			else
+				tVal = (String) wcefValue.invoke(wcefCaCert.get(selectedConfig), null);
+
 			if (tVal != null && tVal.length() >= 2) {
 				editor.putString(
 						WiFiACESettings.PREF_ENTERPRISE_CA_CERT,
@@ -307,8 +339,11 @@ public class WiFiACEList extends Activity implements
 
 			// if (selectedConfig.private_key.value() != null &&
 			// selectedConfig.private_key.value().length() >= 2) {
-			tVal = (String) wcefValue
-					.invoke(wcefPrivateKey.get(selectedConfig), null);
+			if(noEnterpriseFieldType)
+				tVal = (String) wcefPrivateKey.get(selectedConfig);
+			else
+				tVal = (String) wcefValue.invoke(wcefPrivateKey.get(selectedConfig), null);
+
 			if (tVal != null && tVal.length() >= 2) {
 				editor.putString(
 						WiFiACESettings.PREF_ENTERPRISE_PRIV_KEY,
@@ -655,6 +690,9 @@ public class WiFiACEList extends Activity implements
 					wcEnterpriseField = wcClass;
 					break;
 				}
+			boolean noEnterpriseFieldType = false; 
+			if(wcEnterpriseField == null)
+				noEnterpriseFieldType = true; // Cupcake/Donut access enterprise settings directly
 			// I know there is enterpriseFields but I haven't
 			// gotten around it yet
 			// nulls here to workaround the overzealous java compiler
@@ -690,19 +728,24 @@ public class WiFiACEList extends Activity implements
 					wcefPrivateKey = wcefField;
 			}
 			
+			
 			Method wcefSetValue = null;
-
+			if(!noEnterpriseFieldType){
 			for(Method m: wcEnterpriseField.getMethods())
 				//System.out.println(m.getName());
 				if(m.getName().trim().equals("setValue"))
 					wcefSetValue = m;
+			}
 			
 			String tVal = prefs.getString(WiFiACESettings.PREF_ENTERPRISE_EAP,
 					null);
 			if (tVal != null) {
 				// selectedConfig.eap.setValue(tVal, ""));
+				if(!noEnterpriseFieldType)
 				wcefSetValue.invoke(
 						wcefEap.get(selectedConfig), tVal);
+				else
+					wcefEap.set(selectedConfig, tVal);
 
 			}
 			tVal = prefs
@@ -710,20 +753,22 @@ public class WiFiACEList extends Activity implements
 			if (tVal != null) {
 				// selectedConfig.phase2.setValue(convertToQuotedString(prefs
 				// .getString(WiFiACESettings.PREF_ENTERPRISE_PHASE2, "")));
-				wcefSetValue.invoke(
-						wcefPhase2.get(selectedConfig),
-						//surroundWithQuotes(tVal));
-						tVal);
+				if(!noEnterpriseFieldType)
+					wcefSetValue.invoke(
+							wcefPhase2.get(selectedConfig), tVal);
+					else
+						wcefPhase2.set(selectedConfig, surroundWithQuotes(tVal));
 			}
 
 			tVal = prefs.getString(WiFiACESettings.PREF_ENTERPRISE_IDENT, null);
 			if (tVal != null) {
 				// selectedConfig.identity.setValue(convertToQuotedString(prefs
 				// .getString(WiFiACESettings.PREF_ENTERPRISE_IDENT, "")));
-				wcefSetValue.invoke(
-						wcefIdentity.get(selectedConfig),
-						//surroundWithQuotes(tVal));
-						tVal);
+				if(!noEnterpriseFieldType)
+					wcefSetValue.invoke(
+							wcefIdentity.get(selectedConfig), tVal);
+					else
+						wcefIdentity.set(selectedConfig, surroundWithQuotes(tVal));
 
 			}
 
@@ -733,20 +778,22 @@ public class WiFiACEList extends Activity implements
 				// selectedConfig.anonymous_identity
 				// .setValue(convertToQuotedString(prefs.getString(
 				// WiFiACESettings.PREF_ENTERPRISE_ANON_IDENT, "")));
-				wcefSetValue.invoke(
-						wcefAnonymousId.get(selectedConfig),
-						//surroundWithQuotes(tVal));
-						tVal);
+				if(!noEnterpriseFieldType)
+					wcefSetValue.invoke(
+							wcefAnonymousId.get(selectedConfig), tVal);
+					else
+						wcefAnonymousId.set(selectedConfig, surroundWithQuotes(tVal));
 
 			}
 			tVal = prefs.getString(WiFiACESettings.PREF_ENTERPRISE_PASS, null);
 			if (tVal != null) {
 				// selectedConfig.password.setValue(convertToQuotedString(prefs
 				// .getString(WiFiACESettings.PREF_ENTERPRISE_PASS, "")));
-				wcefSetValue.invoke(
-						wcefPassword.get(selectedConfig),
-				//		surroundWithQuotes(tVal));
-						tVal);
+				if(!noEnterpriseFieldType)
+					wcefSetValue.invoke(
+							wcefPassword.get(selectedConfig), tVal);
+					else
+						wcefPassword.set(selectedConfig, surroundWithQuotes(tVal));
 
 			}
 
@@ -756,10 +803,11 @@ public class WiFiACEList extends Activity implements
 				// selectedConfig.client_cert.setValue(convertToQuotedString(prefs
 				// .getString(WiFiACESettings.PREF_ENTERPRISE_CLIENT_CERT,
 				// "")));
-				wcefSetValue.invoke(
-						wcefClientCert.get(selectedConfig),
-						//surroundWithQuotes(tVal));
-						tVal);
+				if(!noEnterpriseFieldType)
+					wcefSetValue.invoke(
+							wcefClientCert.get(selectedConfig), tVal);
+					else
+						wcefClientCert.set(selectedConfig, surroundWithQuotes(tVal));
 
 			}
 
@@ -768,10 +816,11 @@ public class WiFiACEList extends Activity implements
 			if (tVal != null) {
 				// selectedConfig.ca_cert.setValue(convertToQuotedString(prefs
 				// .getString(WiFiACESettings.PREF_ENTERPRISE_CA_CERT, "")));
-				wcefSetValue.invoke(
-						wcefCaCert.get(selectedConfig),
-						//surroundWithQuotes(tVal));
-						tVal);
+				if(!noEnterpriseFieldType)
+					wcefSetValue.invoke(
+							wcefCaCert.get(selectedConfig), tVal);
+					else
+						wcefCaCert.set(selectedConfig, surroundWithQuotes(tVal));
 
 			}
 
@@ -780,10 +829,11 @@ public class WiFiACEList extends Activity implements
 			if (tVal != null) {
 				// selectedConfig.private_key.setValue(convertToQuotedString(prefs
 				// .getString(WiFiACESettings.PREF_ENTERPRISE_PRIV_KEY, "")));
-				wcefSetValue.invoke(
-						wcefPrivateKey.get(selectedConfig),
-						//surroundWithQuotes(tVal));
-						tVal);
+				if(!noEnterpriseFieldType)
+					wcefSetValue.invoke(
+							wcefPrivateKey.get(selectedConfig), tVal);
+					else
+						wcefPrivateKey.set(selectedConfig, surroundWithQuotes(tVal));
 
 			}
 
