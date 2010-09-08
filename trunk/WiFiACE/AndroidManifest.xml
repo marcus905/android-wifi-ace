@@ -13,7 +13,7 @@
       android:label="WiFi Advanced Config Editor Settings">
     </activity>
 </application>
-    <uses-sdk android:minSdkVersion="4" />
+    <uses-sdk android:minSdkVersion="3" />
 
 
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
