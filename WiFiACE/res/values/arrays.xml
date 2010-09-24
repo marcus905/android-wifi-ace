@@ -17,14 +17,14 @@
 	<string-array name="phase2_names">
 		<item>PAP</item>
 		<item>MSCHAP</item>
-		<item>MSCHAP2</item>
+		<item>MSCHAPv2</item>
 		<item>GTC</item>
 		<item>None</item>
 	</string-array>
 	<string-array name="phase2_values">
 		<item>auth=PAP</item>
 		<item>auth=MSCHAP</item>
-		<item>auth=MSCHAP2</item>
+		<item>auth=MSCHAPV2</item>
 		<item>auth=GTC</item>
 		<item></item>
 	</string-array>
